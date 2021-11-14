@@ -9,6 +9,10 @@
   margin: auto;
 }
 
+.Link_active {
+  color: #e8eaed;
+}
+
 .Main-create__container {
   display: flex;
   justify-content: flex-end;
@@ -27,7 +31,7 @@
 }
 
 .button:hover {
-  background-color: #164db3;
+  opacity: .8;
   color: #fff;
 }
 
@@ -71,6 +75,23 @@
 .Post__text {
   margin-top: 20px;
   font-size: 16px;
+}
+
+.PostPage__control {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.PostPage__button_delete {
+  border: 1px solid #b04546;
+  margin-left: 10px;
+  background-color: #b04546;
+}
+
+.PostPage__edit {
+  display: flex;
+  flex-flow: column;
 }
 
 .Loader__container:first-child {

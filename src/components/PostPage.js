@@ -1,29 +1,28 @@
-/* eslint react/prop-types: 0 */
-
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useJsonFetch from '../hooks/useJsonFetch';
 import Post from './Post';
 import Form from './Form';
 
-function PostPage({ match }) {
+export default function PostPage() {
   const [isEdit, setEdit] = useState(false);
   const [data] = useJsonFetch(`${process.env.REACT_APP_DATA_URL}`);
+  const { id } = useParams();
 
   const navigate = useNavigate();
   const onClose = () => navigate('/');
 
   const onEdit = () => setEdit(true);
-  const findPost = () => data.find((el) => el.id === +(match.params.id));
+  const findPost = () => data.find((el) => el.id === +(id));
 
   const onDelete = () => {
-    fetch(`${process.env.REACT_APP_DATA_URL}/${match.params.id}`, {
+    fetch(`${process.env.REACT_APP_DATA_URL}/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
     })
-      .then(() => navigate('/'));
+      .then(() => onClose());
   };
 
   const onSubmit = (content) => {
@@ -33,10 +32,11 @@ function PostPage({ match }) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: +(match.params.id),
+        id: +id,
         content,
       }),
-    });
+    })
+      .then(() => onClose());
   };
 
   return (
@@ -45,34 +45,34 @@ function PostPage({ match }) {
         <>
           <Post post={findPost()} />
 
-          <button
-            className="PostPage__button_edit button"
-            type="submit"
-            onClick={onEdit}
-          >
-            Изменить
-          </button>
-          <button
-            className="PostPage__button_delete button"
-            type="submit"
-            onClick={onDelete}
-          >
-            Удалить
-          </button>
+          <div className="PostPage__control">
+            <button
+              className="PostPage__button_edit button"
+              type="submit"
+              onClick={onEdit}
+            >
+              Изменить
+            </button>
+            <button
+              className="PostPage__button_delete button"
+              type="submit"
+              onClick={onDelete}
+            >
+              Удалить
+            </button>
+          </div>
         </>
       ) }
 
       { data && isEdit && (
-        <>
+        <div className="PostPage__edit">
           <Form
             post={findPost()}
             onSubmit={onSubmit}
             onClose={onClose}
           />
-        </>
+        </div>
       ) }
     </div>
   );
 }
-
-export default PostPage;
