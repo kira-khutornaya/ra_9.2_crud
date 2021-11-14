@@ -7,11 +7,9 @@ import Post from './Post';
 import Form from './Form';
 
 function PostPage({ match }) {
-  console.log('POstPage');
   const [isEdit, setEdit] = useState(false);
   const [data] = useJsonFetch(`${process.env.REACT_APP_DATA_URL}`);
 
-  console.log(match);
   const navigate = useNavigate();
   const onClose = () => navigate('/');
 
