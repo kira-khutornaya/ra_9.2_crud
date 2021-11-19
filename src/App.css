@@ -9,10 +9,6 @@
   margin: auto;
 }
 
-.Link_active {
-  color: #e8eaed;
-}
-
 .Main-create__container {
   display: flex;
   justify-content: flex-end;
